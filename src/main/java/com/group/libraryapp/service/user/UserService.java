@@ -4,8 +4,11 @@ import com.group.libraryapp.controller.user.UserController;
 import com.group.libraryapp.domain.user.User;
 import com.group.libraryapp.dto.user.request.UserCreateRequest;
 import com.group.libraryapp.dto.user.request.UserUpdateRequest;
+import com.group.libraryapp.dto.user.response.UserResponse;
 import com.group.libraryapp.repository.user.UserRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.util.List;
 
 public class UserService {
 
@@ -21,6 +24,9 @@ public class UserService {
     }
 
     // GET API
+    public List<UserResponse> getUsers() {
+        return userRepository.getUsers();
+    }
 
     // PUT API
     public void updateUser(UserUpdateRequest request) {
