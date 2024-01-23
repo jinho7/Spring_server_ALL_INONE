@@ -13,11 +13,9 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-    private final JdbcTemplate jdbcTemplate;
 
-    public UserController(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-        this.userService = new UserService(jdbcTemplate);
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @PostMapping("/user") //POST /user
@@ -38,7 +36,6 @@ public class UserController {
     @DeleteMapping("/user")
     public void deleteUser(@RequestParam String name) {
         userService.deleteUser(name);
-
     }
 
 }
