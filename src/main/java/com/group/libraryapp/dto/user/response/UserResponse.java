@@ -1,6 +1,12 @@
 package com.group.libraryapp.dto.user.response;
 
+import com.group.libraryapp.entity.user.User;
+
 public class UserResponse {
+    private long id;
+    private String name;
+    private Integer age;
+
 
     public UserResponse(long id, String name, Integer age) {
         this.id = id;
@@ -8,10 +14,11 @@ public class UserResponse {
         this.age = age;
     }
 
-    private long id;
-    private String name;
-    private Integer age;
-
+    public UserResponse(User user) {
+        this.id = user.getId();
+        this.name = user.getName();
+        this.age = user.getAge();
+    }
 
 
     public long getId() {

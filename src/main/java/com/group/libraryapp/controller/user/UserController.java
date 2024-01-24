@@ -13,8 +13,8 @@ public class UserController {
 
     private final UserService userService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController(UserService UserService) {
+        this.userService = UserService;
     }
 
     @PostMapping("/user") //POST /user

@@ -3,10 +3,12 @@ package com.group.libraryapp.service.user;
 import com.group.libraryapp.dto.user.request.UserCreateRequest;
 import com.group.libraryapp.dto.user.request.UserUpdateRequest;
 import com.group.libraryapp.dto.user.response.UserResponse;
+import com.group.libraryapp.entity.user.User;
 import com.group.libraryapp.repository.user.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -19,31 +21,34 @@ public class UserService {
 
     // POST API
     public void saveUser(UserCreateRequest request) {
-        userRepository.saveUser(request.getName(), request.getAge());
+        userRepository.save(new User(request.getName(), request.getAge()));
     }
 
     // GET API
     public List<UserResponse> getUsers() {
-        return userRepository.getUsers();
+        return userRepository.findAll().stream()
+                .map(UserResponse::new)
+                //.map(user -> new UserResponse(user))
+                .collect(Collectors.toList());
     }
 
     // PUT API
     public void updateUser(UserUpdateRequest request) {
+       User user = userRepository.findById(request.getId())
+                .orElseThrow(IllegalArgumentException::new);
 
-        if (userRepository.isUserNotExist(request.getId())) {
-            throw new IllegalArgumentException();
-        }
-
-        userRepository.updateUserName(request.getName(), request.getId());
+       user.updateName(request.getName());
+       userRepository.save(user);
     }
 
     // DELETE API
     public void deleteUser(String name) {
-
-        if (userRepository.isUserNotExist(name)) {
+        User user = userRepository.findByName(name);
+        if (user == null) {
             throw new IllegalArgumentException();
         }
 
-        userRepository.deleteUser(name);
+        userRepository.delete(user);
     }
+
 }
