@@ -6,6 +6,7 @@ import com.group.libraryapp.dto.user.response.UserResponse;
 import com.group.libraryapp.entity.user.User;
 import com.group.libraryapp.repository.user.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,11 +21,13 @@ public class UserService {
     }
 
     // POST API
+    @Transactional
     public void saveUser(UserCreateRequest request) {
         userRepository.save(new User(request.getName(), request.getAge()));
     }
 
     // GET API
+    @Transactional(readOnly = true)
     public List<UserResponse> getUsers() {
         return userRepository.findAll().stream()
                 .map(UserResponse::new)
@@ -33,21 +36,18 @@ public class UserService {
     }
 
     // PUT API
+    @Transactional
     public void updateUser(UserUpdateRequest request) {
        User user = userRepository.findById(request.getId())
                 .orElseThrow(IllegalArgumentException::new);
-
        user.updateName(request.getName());
-       userRepository.save(user);
+       // userRepository.save(user); "Persistence Context 로 인해 생략 가능"
     }
 
     // DELETE API
+    @Transactional
     public void deleteUser(String name) {
-        User user = userRepository.findByName(name);
-        if (user == null) {
-            throw new IllegalArgumentException();
-        }
-
+        User user = userRepository.findByName(name).orElseThrow(IllegalArgumentException::new);
         userRepository.delete(user);
     }
 
