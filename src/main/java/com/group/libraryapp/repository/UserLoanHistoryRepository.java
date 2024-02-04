@@ -1,7 +1,5 @@
 package com.group.libraryapp.repository;
 
-import com.group.libraryapp.entity.book.Book;
-import com.group.libraryapp.entity.user.User;
 import com.group.libraryapp.entity.user.loanhistory.UserLoanHistory;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,4 +11,3 @@ public interface UserLoanHistoryRepository extends JpaRepository<UserLoanHistory
 
     Optional<UserLoanHistory> findByUserIdAndBookName(long userId, String bookName);
 }
-

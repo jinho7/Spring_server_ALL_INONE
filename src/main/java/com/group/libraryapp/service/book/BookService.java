@@ -29,6 +29,7 @@ public class BookService {
         bookRepository.save(new Book(request.getName()));
     }
 
+    // 대출 기능
     @Transactional
     public void loanBook(BookLoanRequest request) {
         // 1. 책 정보 가져오기
@@ -44,9 +45,10 @@ public class BookService {
         User user = userRepository.findByName(request.getUserName())
                 .orElseThrow(IllegalAccessError::new);
         // 3-2. 유저 정보와 책 정보를 기반으로 UserLoanHistory 저장
-        userLoanHistoryRepository.save(new UserLoanHistory(user.getId(), book.getName()));
+        userLoanHistoryRepository.save(new UserLoanHistory(user, book.getName()));
     }
 
+    // 반납 기능
     @Transactional
     public void returnBook(BookReturnRequest request) {
         // 1. 유저 정보 가져오기
