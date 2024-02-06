@@ -17,3 +17,6 @@ p
 build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
 r
 Bsrc/test/java/com/group/libraryapp/LibraryAppApplicationTests.java,8/e/8e966a1cca16e42ed594ae1697f0f7a67c48e125
+:
+
+.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
